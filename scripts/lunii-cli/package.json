@@ -1,0 +1,10 @@
+{
+  "name": "lunii-cli",
+  "private": true,
+  "description": "Installe des albums audio sur une Lunii V3 en ligne de commande, en réutilisant le code de lunii-admin-web",
+  "dependencies": {
+    "@legendapp/state": "1.8.1",
+    "esbuild": "0.19.12",
+    "yaml": "2.3.1"
+  }
+}
