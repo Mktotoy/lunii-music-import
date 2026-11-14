@@ -1,55 +1,38 @@
-# lunii-music-import
+# IMPORT MUSIQUE LUNII
 
-Importer ses propres albums audio sur une **Lunii V3** (Ma Fabrique à Histoires) en ligne de commande, sans navigateur, avec un agent IA ou à la main.
+Un **prompt pour agent IA** qui guide pas à pas l'import de vos propres musiques sur une Lunii (Ma Fabrique à Histoires), sous forme d'albums.
 
-- Un sous-dossier par album, une commande, un pack Lunii par album (menu de choix des pistes, puis lecture enchaînée).
-- Sauvegarde automatique du volume, test complet sur une copie, ajout seulement, vérification après écriture.
-- Packagé comme **skill** : `SKILL.md` contient les règles et la procédure pour n'importe quel agent (Claude Code, Codex, Gemini CLI...).
+C'est uniquement un texte : aucun script, aucune dépendance, rien à installer. L'agent suit le processus, et l'installation finale passe par des outils communautaires existants, cités dans les sources.
 
-> Projet communautaire indépendant, non affilié à Lunii. Usage personnel, sur votre propre appareil, avec des fichiers audio dont vous disposez légitimement. Utilisation à vos risques : une sauvegarde est faite à chaque exécution.
+## Utilisation
 
-## Démarrage rapide
+- **N'importe quel agent** (Claude Code, Codex, Gemini CLI...) : copier le contenu de [`SKILL.md`](SKILL.md) dans la conversation, puis remplir la section « Paramètres ».
+- **Comme skill Claude Code** : placer `SKILL.md` dans `~/.claude/skills/lunii-music-import/`, puis demander « importe ces musiques sur ma Lunii ».
 
-```bash
-git clone https://github.com/Mktotoy/lunii-music-import
-cd lunii-music-import
-scripts/setup.sh                                   # une fois
+## Le processus
 
-# albums/01 Comptines/01 Titre.mp3, 02 Titre.mp3...
-# albums/02 Contes/...
-scripts/lunii-import.sh ~/albums                   # test sur copie, rien n'est écrit
-scripts/lunii-import.sh ~/albums --run             # écriture sur la Lunii
-```
+1. Inventaire en lecture seule (fichiers, modèle de Lunii, espace libre)
+2. Préparation des albums en copies (ordre, titres)
+3. Conversion audio (MP3 mono 44 100 Hz, sans tags)
+4. Jaquette par album
+5. Pack au format STUdio par album (menu de choix, puis lecture enchaînée)
+6. Sauvegarde complète de la Lunii
+7. Récapitulatif et accord explicite
+8. Installation avec un outil communautaire
+9. Vérification (anciens packs intacts) et éjection
 
-## Avec un agent IA
+Règles cadre : vos fichiers ne sont jamais modifiés, rien n'est supprimé sur la Lunii, sauvegarde avant toute écriture, accord explicite avant chaque écriture.
 
-- **Claude Code** : copier ce dossier dans `~/.claude/skills/lunii-music-import/`, puis demander « importe ces albums sur ma Lunii ».
-- **Autres agents** : leur faire lire `SKILL.md` (voir `AGENTS.md`).
-- **Prompt à coller** dans n'importe quel agent : `PROMPT.md`.
+## Contribuer
 
-## Prérequis
+Ajoutez une étape, un piège ou une précision par pull request, sans assouplir les règles cadre. Pour un piège, indiquez le modèle de Lunii et la version de firmware concernés.
 
-Linux ou macOS, git, Node 18+, npm, ffmpeg avec libmp3lame, python3 avec Pillow et numpy, openssl. La Lunii doit être branchée et montée localement.
+## Sources
 
-## Ce qui est testé
+[lunii-admin-web](https://github.com/olup/lunii-admin-web) et [lunii-admin-builder](https://github.com/olup/lunii-admin-builder) (olup), [STUdio](https://github.com/marian-m12l/studio) (marian-m12l), [lunii-qt](https://github.com/o-daneel/Lunii.QT) (o-daneel).
 
-Lunii V3, firmware 3.3.3 (`.md` version 7) : 4 albums, 74 pistes. Les packs générés utilisent le même schéma de chiffrement que les packs installés par l'interface web de `lunii-admin-web`. Non testé sur V2 (refusé par le script).
-
-## Structure
-
-| Chemin | Rôle |
-|---|---|
-| `SKILL.md` | Règles cadre et procédure pour agent |
-| `PROMPT.md` | Prompt autonome à copier-coller |
-| `AGENTS.md` | Point d'entrée pour les agents non Claude |
-| `scripts/setup.sh` | Installation : clone `lunii-admin-web` (version figée), dépendances, build |
-| `scripts/lunii-import.sh` | Import : sauvegarde, conversion, test, écriture, vérification |
-| `scripts/lunii-cli/` | Exécution en Node du code d'installation de `lunii-admin-web` |
-
-## Crédits
-
-S'appuie sur [lunii-admin-web](https://github.com/olup/lunii-admin-web) (olup) et son fork. Ce dépôt ne contient aucun fichier de `lunii-admin-web` : le code est téléchargé par `scripts/setup.sh` au moment de l'installation et reste soumis aux conditions de son auteur.
+Projet communautaire indépendant, non affilié à Lunii. Usage personnel, sur votre propre appareil, avec des fichiers dont vous disposez légitimement.
 
 ## Licence
 
-MIT pour le code de ce dépôt (voir `LICENSE`).
+[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.fr) : libre de partager et d'adapter, en citant la source.
